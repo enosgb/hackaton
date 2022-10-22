@@ -5,7 +5,7 @@ import 'express-async-errors'
 import 'reflect-metadata'
 const express = require('express')
 
-
+const port = process.env.MONGO_URI || 3000;
 
 const jwt = require('jsonwebtoken')
 
@@ -22,7 +22,6 @@ const app = express();
 
 const route = Router();
 
-const port = process.env.MONGO_URI;
 
 app.use(express.json());
 
