@@ -9,7 +9,7 @@ const dbConnect_1 = __importDefault(require("./Config/dbConnect"));
 require("express-async-errors");
 require("reflect-metadata");
 const express = require('express');
-const port = process.env.MONGO_URI || 3000;
+const port = process.env.PORT || 3000;
 const jwt = require('jsonwebtoken');
 dbConnect_1.default.on("error", console.log.bind(console, "Erro de Conexão com o banco de dados!"));
 dbConnect_1.default.once("open", () => {
