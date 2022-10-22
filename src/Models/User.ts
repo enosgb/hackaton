@@ -13,10 +13,8 @@ const userSchema = new mongoose.Schema(
       trim: true,
       required: true
     },
-    idade:{
-      type: String,
-      trim: true,
-      required: true
+    bornDate:{
+      type: Date,
     },
     email: {
       type: String,
@@ -31,7 +29,16 @@ const userSchema = new mongoose.Schema(
     created: {
       type: Date,
       default: Date.now
-    }
+    },
+    weight:{
+      type: String,
+      trim: true
+    },
+    gender:{
+      type: String,
+      trim: true,
+      required: true
+    },
   },
   {
     versionKey: false,
