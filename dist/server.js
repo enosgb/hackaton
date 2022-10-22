@@ -9,6 +9,7 @@ const dbConnect_1 = __importDefault(require("./Config/dbConnect"));
 require("express-async-errors");
 require("reflect-metadata");
 const express = require('express');
+const cors = require('cors');
 const port = process.env.PORT || 3000;
 const jwt = require('jsonwebtoken');
 dbConnect_1.default.on("error", console.log.bind(console, "Erro de Conexão com o banco de dados!"));
@@ -18,6 +19,7 @@ dbConnect_1.default.once("open", () => {
 const app = express();
 const route = (0, express_1.Router)();
 app.use(express.json());
+app.use(cors());
 app.use(function (req, res, next) {
     if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
         jwt.verify(req.headers.authorization.split(' ')[1], 'RESTFULAPIs', function (err, decode) {
