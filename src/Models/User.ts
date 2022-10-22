@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now
     },
+    height:{
+      type: String,
+      trim: true,
+    },
     weight:{
       type: String,
       trim: true
