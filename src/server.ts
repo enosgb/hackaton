@@ -4,6 +4,7 @@ import db from "./Config/dbConnect";
 import 'express-async-errors'
 import 'reflect-metadata'
 const express = require('express')
+const cors = require('cors')
 
 const port = process.env.PORT || 3000;
 
@@ -24,6 +25,7 @@ const route = Router();
 
 
 app.use(express.json());
+app.use(cors())
 
 app.use(function (req: any, res: Response, next: NextFunction) {
   if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
