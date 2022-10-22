@@ -1,9 +1,9 @@
 import { request, Request, Response } from "express";
-import users from "../Models/User";
+import User from "../Models/User";
 
 class UserController {
   static getUsers = (req: Request, res: Response) => {
-    users.find((err, users) => {
+    User.find((err, users) => {
       res.status(200).json(users);
     });
   };
@@ -11,7 +11,7 @@ class UserController {
   static getUserById = (req: Request, res: Response) => {
     const id = req.params.id;
 
-    users.findById(id, (err: any, User: any) => {
+    User.findById(id, (err: any, User: any) => {
       if (err) {
         res
           .status(400)
@@ -23,7 +23,7 @@ class UserController {
   };
 
   static createUser(req: Request, res: Response) {
-    let user = new users(req, res);
+    let user = new User(req.body);
 
     user.save((err) => {
       if (err) {
@@ -39,7 +39,7 @@ class UserController {
   static updateUser(req: Request, res: Response) {
     const id = req.params.id;
 
-    users.findByIdAndUpdate(id, { $set: req.body }, (err: any) => {
+    User.findByIdAndUpdate(id, { $set: req.body }, (err: any) => {
       if (!err) {
         res.status(200).send({ message: "Usuário atualizado com sucesso!" });
       } else {
@@ -51,7 +51,7 @@ class UserController {
   static deleteUser(req: Request, res: Response) {
     const id = req.params.id;
 
-    users.findByIdAndDelete(id, (err: any) => {
+    User.findByIdAndDelete(id, (err: any) => {
       if (!err) {
         res.status(200).send({ message: "Usuário removido com sucesso!" });
       } else {

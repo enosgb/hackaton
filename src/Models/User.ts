@@ -2,14 +2,22 @@ import mongoose, { Schema } from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    id: { type: String },
     name: { type: String, required: true },
+    username: { type: String },
+    email: { type: String },
+    password: { type: String },
+    roles: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Role"
+      }
+    ]
   },
   {
     versionKey: false,
   }
 );
 
-const users = mongoose.model("users", userSchema);
+const User = mongoose.model("User", userSchema);
 
-export default users;
+export default User;
