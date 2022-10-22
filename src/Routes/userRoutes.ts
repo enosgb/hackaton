@@ -4,8 +4,10 @@ import UserController from "../Controllers/userController";
 const router = express.Router();
 
 router
-  .post("/tasks", UserController.loginRequired,UserController.profile)
+  .get("/users",UserController.getUsers)
+  .get("/user/:id",UserController.getById)
+  .post("/tasks", UserController.loginRequired, UserController.profile)
   .post("/auth/register", UserController.register)
   .post("/auth/sign_in", UserController.sign_in)
 
-  export default router;
+export default router;
