@@ -3,6 +3,7 @@ import routes from "./Routes/index";
 import db from "./Config/dbConnect";
 import 'express-async-errors'
 import 'reflect-metadata'
+const cors = require('cors')
 const express = require('express')
 
 const port = process.env.PORT || 3000;
@@ -22,7 +23,9 @@ const app = express();
 
 const route = Router();
 
-
+app.use(cors({
+  origin: '*'
+}))
 app.use(express.json());
 
 app.use(function (req: any, res: Response, next: NextFunction) {

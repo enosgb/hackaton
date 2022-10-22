@@ -1,5 +1,5 @@
-import appointments from "../Models/appointment";
 import { Request, Response } from 'express'
+import appointments from '../Models/Appointment'
 
 class AppointmentContoller {
     static getAppointments = (req: Request, res: Response) => {
@@ -56,6 +56,10 @@ class AppointmentContoller {
                 res.status(500).send({ message: err.message })
             }
         })
+    }
+
+    static getAppointmentOrder = (req: any, res: Response) => {
+        console.log(req.params.query.order)
     }
 }
 

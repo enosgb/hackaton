@@ -2,9 +2,11 @@ import mongoose from "mongoose";
 
 const appointmentSchema = new mongoose.Schema(
     {
-        user:{type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true},
-        appointmentDay:{type: Date},
-        showNotification:{type: String}
+        doctor: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
+        patient: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
+        appointmentDay: { type: Date , required:true},
+        showNotification: { type: Boolean, required:true},
+        order: { type: String}
     }
 )
 
