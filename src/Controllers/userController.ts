@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../Models/User";
-import mongoose from "mongoose";
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 

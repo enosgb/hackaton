@@ -1,9 +1,11 @@
-import express from "express";
+import {Router,Response,Request,NextFunction} from "express";
 import routes from "./Routes/index";
 import db from "./Config/dbConnect";
-import roles from './Models'
-const Role = roles.role;
-import { Router } from "express";
+const express = require('express')
+
+
+
+const jwt = require('jsonwebtoken')
 
 db.on(
   "error",
@@ -22,31 +24,19 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+app.use(function(req:any, res:Response, next:NextFunction) {
+  if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
+    jwt.verify(req.headers.authorization.split(' ')[1], 'RESTFULAPIs', function(err:any, decode:any) {
+      if (err) req.user = undefined;
+      req.user = decode;
+      next();
+    });
+  } else {
+    req.user = undefined;
+    next();
+  }
+});
+
 routes(app);
 
 app.listen(port, () => `server running on port ${port}` );
-
-function initial(){
-  Role.estimatedDocumentCount((err:any, count:number)=>{
-    if(!err && count ===0){
-      new Role({
-        name: "User"
-      }).save((err: any) =>{
-        if(err){
-          console.log('erro',err);
-        }
-        console.log("usuario adicionado a coleção")
-      })
-
-      new Role({
-        name: "admin"
-      }).save((err:any)=>{
-        if(err){
-          console.log('erro', err);
-        }
-
-        console.log("admin adicionado a coleção")
-      })
-    }
-  })
-}
