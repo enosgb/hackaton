@@ -20,7 +20,7 @@ const app = express();
 
 const route = Router();
 
-const port = process.env.PORT || 3000;
+const port = process.env.MONGO_URI;
 
 app.use(express.json());
 
