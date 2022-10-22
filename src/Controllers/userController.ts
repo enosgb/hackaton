@@ -1,64 +1,58 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import User from "../Models/User";
+import mongoose from "mongoose";
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
 
 class UserController {
-  static getUsers = (req: Request, res: Response) => {
-    User.find((err, users) => {
-      res.status(200).json(users);
-    });
-  };
 
-  static getUserById = (req: Request, res: Response) => {
-    const id = req.params.id;
-
-    User.findById(id, (err: any, User: any) => {
+  static register = (req: Request, res: Response) => {
+    let newUser = new User(req.body);
+    newUser.hash_password = bcrypt.hashSync(req.body.password, 10);
+    newUser.save(function (err, user) {
       if (err) {
-        res
-          .status(400)
-          .send({ message: `${err.message} - id de usuário não encontrado` });
+        return res.status(400).send({
+          message: err
+        });
       } else {
-        res.status(200).send(User);
-      }
-    });
-  };
-
-  static createUser(req: Request, res: Response) {
-    let user = new User(req.body);
-
-    user.save((err) => {
-      if (err) {
-        res
-          .status(500)
-          .send({ message: `${err.message} - falha ao criar usuário.` });
-      } else {
-        res.status(201).send(user.toJSON());
+        user.hash_password = undefined;
+        return res.json(user);
       }
     });
   }
 
-  static updateUser(req: Request, res: Response) {
-    const id = req.params.id;
-
-    User.findByIdAndUpdate(id, { $set: req.body }, (err: any) => {
-      if (!err) {
-        res.status(200).send({ message: "Usuário atualizado com sucesso!" });
-      } else {
-        res.status(500).send({ message: err.message });
+  static sign_in = (req: Request, res: Response)=>{
+    User.findOne({
+      email: req.body.email
+    }, function(err:any, user:any) {
+      if (err) throw err;
+      if (!user || !user.comparePassword(req.body.password)) {
+        return res.status(401).json({ message: 'Authentication failed. Invalid user or password.' });
       }
+      return res.json({ token: jwt.sign({ email: user.email, fullName: user.fullName, _id: user._id }, 'RESTFULAPIs') });
     });
   }
 
-  static deleteUser(req: Request, res: Response) {
-    const id = req.params.id;
-
-    User.findByIdAndDelete(id, (err: any) => {
-      if (!err) {
-        res.status(200).send({ message: "Usuário removido com sucesso!" });
-      } else {
-        res.status(500).send({ message: err.message });
-      }
-    });
+  static loginRequired = (req:any,res:Response,next:NextFunction)=>{
+    if (req.user) {
+      next();
+    } else {
+  
+      return res.status(401).json({ message: 'Unauthorized user!!' });
+    }
   }
+
+  static profile = (req:any,res:Response,next:NextFunction)=>{
+    if (req.user) {
+      res.send(req.user);
+      next();
+    } 
+    else {
+     return res.status(401).json({ message: 'Invalid token' });
+    }
+  }
+
 }
 
 export default UserController;
