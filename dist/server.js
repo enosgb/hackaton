@@ -19,7 +19,9 @@ dbConnect_1.default.once("open", () => {
 const app = express();
 const route = (0, express_1.Router)();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: '*'
+}));
 app.use(function (req, res, next) {
     if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
         jwt.verify(req.headers.authorization.split(' ')[1], 'RESTFULAPIs', function (err, decode) {
