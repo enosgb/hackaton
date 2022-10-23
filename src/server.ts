@@ -23,9 +23,7 @@ const app = express();
 
 const route = Router();
 
-app.use(cors({
-  origin: '*'
-}))
+
 app.use(express.json());
 app.use(cors({
   origin: '*'

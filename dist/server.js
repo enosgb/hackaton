@@ -18,9 +18,6 @@ dbConnect_1.default.once("open", () => {
 });
 const app = express();
 const route = (0, express_1.Router)();
-app.use(cors({
-    origin: '*'
-}));
 app.use(express.json());
 app.use(cors({
     origin: '*'
