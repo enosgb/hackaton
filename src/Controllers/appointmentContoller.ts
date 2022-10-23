@@ -3,6 +3,17 @@ import appointments from '../Models/Appointment'
 
 class AppointmentContoller {
     static getAppointments = (req: Request, res: Response) => {
+        const order = req.query;
+        const timeElapsed = Date.now();
+        const today = new Date(timeElapsed);
+        const d1 = new Date(today.toISOString().slice(0, 10));
+        const d2 = new Date('2022-10-12');
+        const result = d1.getTime() - d2.getTime();
+        const diffInDays = (result / (1000 * 60 * 60 * 24));
+        console.log(diffInDays) 
+
+        
+
         appointments.find((err: any, appointments: any) => {
             res.status(200).json(appointments);
         })
@@ -58,9 +69,7 @@ class AppointmentContoller {
         })
     }
 
-    static getAppointmentOrder = (req: any, res: Response) => {
-        console.log(req.params.query.order)
-    }
+
 }
 
 export default AppointmentContoller
