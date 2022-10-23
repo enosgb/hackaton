@@ -8,12 +8,12 @@ const userSchema = new mongoose.Schema(
       trim: true,
       required: true
     },
-    lastName:{
+    lastName: {
       type: String,
       trim: true,
       required: true
     },
-    bornDate:{
+    bornDate: {
       type: Date,
     },
     email: {
@@ -30,29 +30,30 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now
     },
-    height:{
+    height: {
       type: String,
       trim: true,
     },
-    weight:{
+    weight: {
       type: String,
       trim: true
     },
-    gender:{
+    gender: {
       type: String,
       trim: true,
       required: true
     },
+    isAdmin: { type: Boolean, required: true }
   },
   {
     versionKey: false,
   }
 );
 
-userSchema.methods.comparePassword = function(password:any){
+userSchema.methods.comparePassword = function (password: any) {
   return bcrypt.compareSync(password, this.hash_password)
 }
 
-const User = mongoose.model("User", userSchema);
+const Users = mongoose.model("User", userSchema);
 
-export default User;
+export default Users;
