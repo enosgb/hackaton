@@ -5,7 +5,6 @@ import 'express-async-errors'
 import 'reflect-metadata'
 const cors = require('cors')
 const express = require('express')
-const cors = require('cors')
 
 const port = process.env.PORT || 3000;
 

@@ -2,20 +2,50 @@ import { Request, Response } from 'express'
 import appointments from '../Models/Appointment'
 
 class AppointmentContoller {
-    static getAppointments = (req: Request, res: Response) => {
-        const order = req.query;
-        const timeElapsed = Date.now();
-        const today = new Date(timeElapsed);
-        const d1 = new Date(today.toISOString().slice(0, 10));
-        const d2 = new Date('2022-10-12');
-        const result = d1.getTime() - d2.getTime();
-        const diffInDays = (result / (1000 * 60 * 60 * 24));
-        console.log(diffInDays) 
 
-        
+
+    static getAppointments = (req: Request, res: Response) => {
+        function orderByDanger(appointments: any) {
+            return appointments.sort(function (a: any, b: any) {
+                if (new Date(a.appointmentDay) > new Date(b.appointmentDay)) {
+                    return -1;
+                }
+                if (new Date(a.appointmentDay) < new Date(b.appointmentDay)) {
+                    return 1;
+                }
+                // a must be equal to b
+                return 0;
+            })
+        }
+
+        function orderByGood(appointments: any) {
+            return appointments.sort(function (a: any, b: any) {
+                if (new Date(a.appointmentDay) > new Date(b.appointmentDay)) {
+                    return 1;
+                }
+                if (new Date(a.appointmentDay) < new Date(b.appointmentDay)) {
+                    return -1;
+                }
+                // a must be equal to b
+                return 0;
+            })
+        }
+
+        const order = req.query.order;
+
 
         appointments.find((err: any, appointments: any) => {
-            res.status(200).json(appointments);
+            if (order === "danger") {
+                let result = orderByDanger(appointments)
+                res.status(200).json(appointments);
+            }
+            else if (order === "good") {
+                let result = orderByGood(appointments)
+                res.status(200).json(appointments);
+            } else {
+
+                res.status(200).json(appointments);
+            }
         })
     }
 
