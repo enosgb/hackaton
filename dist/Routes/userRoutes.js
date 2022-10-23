@@ -7,6 +7,8 @@ const express_1 = __importDefault(require("express"));
 const userController_1 = __importDefault(require("../Controllers/userController"));
 const router = express_1.default.Router();
 router
+    .get("/users", userController_1.default.getUsers)
+    .get("/user/:id", userController_1.default.getById)
     .post("/tasks", userController_1.default.loginRequired, userController_1.default.profile)
     .post("/auth/register", userController_1.default.register)
     .post("/auth/sign_in", userController_1.default.sign_in);

@@ -46,11 +46,12 @@ const userSchema = new mongoose_1.default.Schema({
         trim: true,
         required: true
     },
+    isAdmin: { type: Boolean, required: true }
 }, {
     versionKey: false,
 });
 userSchema.methods.comparePassword = function (password) {
     return bcrypt.compareSync(password, this.hash_password);
 };
-const User = mongoose_1.default.model("User", userSchema);
-exports.default = User;
+const Users = mongoose_1.default.model("User", userSchema);
+exports.default = Users;

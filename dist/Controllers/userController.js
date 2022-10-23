@@ -52,4 +52,22 @@ UserController.profile = (req, res, next) => {
         return res.status(401).json({ message: 'Invalid token' });
     }
 };
+UserController.getById = (req, res) => {
+    const id = req.params.id;
+    User_1.default.findById(id, (err, User) => {
+        if (err) {
+            res
+                .status(400)
+                .send({ message: `${err.message} - id de Usuario não encontrado` });
+        }
+        else {
+            res.status(200).send(User);
+        }
+    });
+};
+UserController.getUsers = (req, res) => {
+    User_1.default.find((err, users) => {
+        res.status(200).json(users);
+    });
+};
 exports.default = UserController;

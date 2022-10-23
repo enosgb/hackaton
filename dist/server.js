@@ -8,8 +8,8 @@ const index_1 = __importDefault(require("./Routes/index"));
 const dbConnect_1 = __importDefault(require("./Config/dbConnect"));
 require("express-async-errors");
 require("reflect-metadata");
-const express = require('express');
 const cors = require('cors');
+const express = require('express');
 const port = process.env.PORT || 3000;
 const jwt = require('jsonwebtoken');
 dbConnect_1.default.on("error", console.log.bind(console, "Erro de Conexão com o banco de dados!"));
@@ -18,6 +18,9 @@ dbConnect_1.default.once("open", () => {
 });
 const app = express();
 const route = (0, express_1.Router)();
+app.use(cors({
+    origin: '*'
+}));
 app.use(express.json());
 app.use(cors({
     origin: '*'
