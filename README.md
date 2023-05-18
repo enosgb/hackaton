@@ -13,7 +13,7 @@ npm run swagger-autogen or yarn swagger-autogen
 # build project 
 npm run tsc or yarn tsc
 
-![alt text](https://github.com/hun251/AllSafe/blob/main/img/all_safe_tela_principal_print.png)
+![alt text](https://github.com/enosgb/hackaton-eHealth-backend/blob/master/Screenshot%202023-05-17%20215055.png)
 
 
 
